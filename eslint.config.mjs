@@ -1,77 +1,63 @@
 import antfu from '@antfu/eslint-config';
-import query from '@tanstack/eslint-plugin-query';
-import { FlatCompat } from '@eslint/eslintrc';
-import globals from 'globals';
 
-const compat = new FlatCompat();
-
-const config = antfu({
-    react: true,
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
+export default antfu({
+    node: true,
+    stylistic: {
+        indent: 4, // 4, or 'tab'
+        quotes: 'single', // or 'double'
     },
-})
-    .append(
-        compat.extends('plugin:@conarti/feature-sliced/rules').map((plugin) => ({
-            ...plugin,
-            name: 'feature-sliced/rules',
-        })),
-    ).append({
-        name: 'feature-sliced/disables',
-        files: ['src/src/resources.ts'],
-        rules: {
-            '@conarti/feature-sliced/public-api': 'off',
-        },
-    })
-    .append(
-        query.configs['flat/recommended'].map((plugin) => ({
-            ...plugin,
-            name: 'query/rules',
-        })),
-    )
-    .append({
-        rules: {
-            'style/quotes': [
-                'error',
-                'single',
-            ],
-            'style/indent': [
-                'error',
-                4,
-            ],
-            'style/semi': [
-                'error',
-                'always',
-            ],
-            'style/arrow-parens': [
-                'error',
-                'always',
-            ],
-            'style/brace-style': [
-                'error',
-                '1tbs',
-            ],
-            'style/operator-linebreak': [
-                'error',
-                'after',
-                { overrides: { '?': 'before', ':': 'before' } },
-            ],
-            'style/quote-props': [
-                'error',
-                'as-needed',
-            ],
-            'import/order': [
-                'error',
-                {
-                    groups: [['external', 'builtin'], ['internal'], ['parent', 'sibling', 'index']],
-                    pathGroups: [{ pattern: '@/**', group: 'internal' }],
-                    'newlines-between': 'always',
-                },
-            ],
-        },
-    });
-
-export default config;
+}).append({
+    rules: {
+        'style/semi': [
+            'error',
+            'always',
+        ],
+        'style/arrow-parens': [
+            'error',
+            'always',
+        ],
+        'style/brace-style': [
+            'error',
+            '1tbs',
+        ],
+        'style/operator-linebreak': [
+            'error',
+            'after',
+            { overrides: { '?': 'before', ':': 'before' } },
+        ],
+        'style/quote-props': [
+            'error',
+            'as-needed',
+        ],
+        'style/member-delimiter-style': [
+            'error',
+            {
+                multiline: { delimiter: 'comma', requireLast: true },
+                singleline: { delimiter: 'comma', requireLast: false },
+                multilineDetection: 'brackets',
+            },
+        ],
+        'import/order': [
+            'error',
+            {
+                groups: [['external', 'builtin'], ['internal'], ['parent', 'sibling', 'index']],
+                pathGroups: [{ pattern: '@/**', group: 'internal' }],
+                'newlines-between': 'always',
+            },
+        ],
+        'ts/prefer-literal-enum-member': [
+            'off',
+        ],
+        'unicorn/prefer-number-properties': [
+            'off',
+        ],
+        'eslint-comments/no-unlimited-disable': [
+            'off',
+        ],
+        'no-console': 'off',
+        curly: [
+            'error',
+            'multi',
+        ],
+    },
+});
