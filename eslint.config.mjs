@@ -1,12 +1,11 @@
 import antfu from '@antfu/eslint-config';
-import query from '@tanstack/eslint-plugin-query';
 import { FlatCompat } from '@eslint/eslintrc';
+import query from '@tanstack/eslint-plugin-query';
 import globals from 'globals';
 
 const compat = new FlatCompat();
 
 const config = antfu({
-    react: true,
     languageOptions: {
         globals: {
             ...globals.browser,
@@ -19,9 +18,10 @@ const config = antfu({
             ...plugin,
             name: 'feature-sliced/rules',
         })),
-    ).append({
+    )
+    .append({
         name: 'feature-sliced/disables',
-        files: ['src/src/resources.ts'],
+        files: ['src/app/index.ts'],
         rules: {
             '@conarti/feature-sliced/public-api': 'off',
         },
@@ -62,6 +62,35 @@ const config = antfu({
             'style/quote-props': [
                 'error',
                 'as-needed',
+                { numbers: true },
+            ],
+            'style/member-delimiter-style': [
+                'error',
+                {
+                    multiline: { delimiter: 'semi', requireLast: true },
+                    singleline: { delimiter: 'semi', requireLast: false },
+                    multilineDetection: 'brackets',
+                },
+            ],
+            'vue/html-indent': [
+                'error',
+                4,
+            ],
+            'vue/quote-props': [
+                'error',
+                'as-needed',
+            ],
+            'vue/define-macros-order': [
+                'error',
+                { order: ['defineModel', 'defineProps', 'defineEmits', 'defineSlots'] },
+            ],
+            'vue/block-order': [
+                'error',
+                { order: ['template', 'script', 'style'] },
+            ],
+            'vue/component-name-in-template-casing': [
+                'error',
+                'kebab-case',
             ],
             'import/order': [
                 'error',
@@ -70,6 +99,29 @@ const config = antfu({
                     pathGroups: [{ pattern: '@/**', group: 'internal' }],
                     'newlines-between': 'always',
                 },
+            ],
+            'ts/prefer-literal-enum-member': [
+                'off',
+            ],
+            'unicorn/prefer-number-properties': [
+                'off',
+            ],
+            'eslint-comments/no-unlimited-disable': [
+                'off',
+            ],
+            'dot-notation': [
+                'off',
+            ],
+            curly: [
+                'error',
+                'all',
+            ],
+            'no-template-curly-in-string': [
+                'off',
+            ],
+            'no-console': [
+                'error',
+                { allow: ['warn', 'error', 'assert'] },
             ],
         },
     });
